@@ -11,7 +11,7 @@ namespace buy_sale.database.Models
         public int Id { get; set; }
 
         [Column("product_id")]
-        public Guid ProductId {get; set; }
+        public int ProductId {get; set; }
         public Product Product { get; set; }
 
         [Column("product_quantity")]
@@ -21,7 +21,7 @@ namespace buy_sale.database.Models
         public decimal ProductAmount{ get; set; }
 
         [Column("sale_id")]
-        public Guid SaleId { get; set; }
+        public int SaleId { get; set; }
         public Sale Sale { get; set; }
     }
 }

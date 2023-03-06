@@ -6,14 +6,10 @@ namespace buy_sale.database.Models
     [Table("buyers")]
     public class Buyer
     {
-        public Buyer()
-        {
-            Id = Guid.NewGuid();
-        }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Column("id")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Column("name")]
         public string Name { get; set; }

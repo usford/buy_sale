@@ -1,14 +1,13 @@
-﻿using buy_sale.database.Models;
-using System.Linq.Expressions;
-
+﻿
 namespace buy_sale.database.Interfaces
 {
     public interface IRepository<T>
     {
-        //void Add(T entity);
-        //Task<T> Update(T entity);
-        //Task<bool> Delete(T entity);
+        Task Add(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(int id);
         Task<IEnumerable<T>> GetAllAsync();
-        //Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        Task<T> SingleOrDefaultAsync(int id);
+        Task<int> SaveChangesAsync();
     }
 }
