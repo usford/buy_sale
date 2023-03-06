@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace buy_sale.database
 {
@@ -70,8 +71,8 @@ namespace buy_sale.database
                     Id = 1,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
-                    SalesPointId = salesPoints[0].Id,
-                    BuyerId = buyers[0].Id,
+                    SalesPointId = 1,
+                    BuyerId = 1,
                     TotalAmount = 25.75m
                 }
             };
@@ -87,17 +88,17 @@ namespace buy_sale.database
             {
                 new SalesData {
                     Id = 1,
-                    ProductId = products[1].Id,
+                    ProductId = 2,
                     ProductQuantity = 1,
                     ProductAmount = 5.25m,
-                    SaleId = sales[0].Id },
+                    SaleId = 1 },
 
                 new SalesData {
                     Id = 2,
-                    ProductId = products[2].Id,
+                    ProductId = 3,
                     ProductQuantity = 2,
                     ProductAmount = 20.5m,
-                    SaleId = sales[0].Id }
+                    SaleId = 1 }
             };
 
             modelBuilder.Entity<SalesData>().HasData(saledData);

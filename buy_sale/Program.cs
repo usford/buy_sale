@@ -43,6 +43,7 @@ void ConfigureServices(IServiceCollection services)
     });
     services.AddTransient<IRepository<Product>, ProductRepository>();
     services.AddTransient<IRepository<SalesPoint>, SalesPointRepository>();
+    services.AddTransient<IRepository<Buyer>, BuyersRepository>();
     services.AddControllers();
 
     services.AddSwaggerGen(options =>

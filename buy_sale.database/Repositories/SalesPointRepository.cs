@@ -16,7 +16,7 @@ namespace buy_sale.database.Repositories
             return await _db.SalesPoints
                 .AsNoTracking()
                 .Include(sp => sp.ProvidedProducts)
-                .ThenInclude(pp => pp.Product)
+                    .ThenInclude(pp => pp.Product)
                 .ToArrayAsync();
         }
 
@@ -25,7 +25,7 @@ namespace buy_sale.database.Repositories
             var salesPoint = await _db.SalesPoints
                 .AsNoTracking()
                 .Include(sp => sp.ProvidedProducts)
-                .ThenInclude(pp => pp.Product)
+                    .ThenInclude(pp => pp.Product)
                 .SingleOrDefaultAsync(sp => sp.Id == id);
 
             return salesPoint;
