@@ -33,11 +33,16 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services)
 {
+    services.AddControllersWithViews().AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
+
     services.AddDbContext<BuySaleDbContext>(opt =>
     {
         opt.UseSqlServer(config.GetConnectionString("Default"));
     });
     services.AddTransient<IRepository<Product>, ProductRepository>();
+    services.AddTransient<IRepository<SalesPoint>, SalesPointRepository>();
     services.AddControllers();
 
     services.AddSwaggerGen(options =>

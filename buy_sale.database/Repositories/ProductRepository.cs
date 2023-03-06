@@ -14,12 +14,16 @@ namespace buy_sale.database.Repositories
         }
         async public Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _db.Products.ToArrayAsync();
+            return await _db.Products
+                .AsNoTracking()
+                .ToArrayAsync();
         }
 
         async public Task<Product> SingleOrDefaultAsync(int id)
         {
-            var product = await _db.Products.SingleOrDefaultAsync(p => p.Id == id);
+            var product = await _db.Products
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.Id == id);
 
             return product;
         }
@@ -29,14 +33,16 @@ namespace buy_sale.database.Repositories
             return await _db.SaveChangesAsync();
         }
 
-        async public Task Add(Product product)
+        async public Task<bool> Add(Product product)
         {
             await _db.Products.AddAsync(product);
+
+            return true;
         }
 
         public Task<bool> Update(Product product)
         {
-            var result = _db.Products.AsNoTracking().SingleOrDefault(x => x.Id == product.Id);
+            var result = _db.Products.AsNoTracking().SingleOrDefault(p => p.Id == product.Id);
 
             if (result is null) return Task.FromResult(false);
 

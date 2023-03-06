@@ -3,7 +3,7 @@ namespace buy_sale.database.Interfaces
 {
     public interface IRepository<T>
     {
-        Task Add(T entity);
+        Task<bool> Add(T entity);
         Task<bool> Update(T entity);
         Task<bool> Delete(int id);
         Task<IEnumerable<T>> GetAllAsync();

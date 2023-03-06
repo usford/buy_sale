@@ -41,9 +41,13 @@ namespace buy_sale.host.Controllers
             return Ok(product);
         }
 
+        /// <summary>
+        /// Добавление продукта
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResult<Product>> Add(string name, decimal price)
+        public async Task<ActionResult<bool>> Add(string name, decimal price)
         {
             var product = new Product
             {
@@ -54,11 +58,15 @@ namespace buy_sale.host.Controllers
             await _repository.Add(product);
             var result = await _repository.SaveChangesAsync();
 
-            if (result != 1) return BadRequest();
+            if (result < 1) return BadRequest();
 
-            return product;
+            return Ok(true);
         }
 
+        /// <summary>
+        /// Обновление продукта
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("update")]
         public async Task<ActionResult<bool>> Update(Product product)
@@ -66,11 +74,15 @@ namespace buy_sale.host.Controllers
             var changedProduct = await _repository.Update(product);
             var result = await _repository.SaveChangesAsync();
 
-            if (!changedProduct || result != 1) return false;
+            if (!changedProduct || result < 1) return false;
 
             return true;
         }
 
+        /// <summary>
+        /// Удаление продукта
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("delete/{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
@@ -78,7 +90,7 @@ namespace buy_sale.host.Controllers
             var deletedProduct = await _repository.Delete(id);
             var result = await _repository.SaveChangesAsync();
 
-            if (!deletedProduct || result != 1) return false;
+            if (!deletedProduct || result < 1) return false;
 
             return true;
         }
