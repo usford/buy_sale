@@ -24,8 +24,6 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
-app.MapGet("/", async (IRepository<Product> dsa) => await dsa.GetAllAsync());
-
 app.UseRouting();
 app.MapControllers();
 
@@ -44,6 +42,8 @@ void ConfigureServices(IServiceCollection services)
     services.AddTransient<IRepository<Product>, ProductRepository>();
     services.AddTransient<IRepository<SalesPoint>, SalesPointRepository>();
     services.AddTransient<IRepository<Buyer>, BuyersRepository>();
+    services.AddTransient<IRepository<Sale>, SalesRepository>();
+
     services.AddControllers();
 
     services.AddSwaggerGen(options =>
@@ -56,3 +56,5 @@ void ConfigureServices(IServiceCollection services)
         });
     });
 }
+
+public partial class Program { }
