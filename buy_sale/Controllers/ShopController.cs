@@ -10,21 +10,20 @@ namespace buy_sale.host.Controllers
     public class ShopController : Controller
     {
         IRepository<SalesPoint> _salesPointRepository;
-        IRepository<Buyer> _buyersRepository;
-        IRepository<Product> _productsRepository;
         IRepository<Sale> _salesRepository;
+        ILogger<ShopController> _logger;
 
         public ShopController(
             IRepository<SalesPoint> salesPointRepository,
-            IRepository<Buyer> buyersRepository,
-            IRepository<Product> productsRepository,
-            IRepository<Sale> salesRepository
+            IRepository<Sale> salesRepository,
+            ILogger<ShopController> logger
             )
         {
             _salesPointRepository = salesPointRepository ?? throw new ArgumentNullException(nameof(salesPointRepository));
-            _buyersRepository = buyersRepository ?? throw new ArgumentNullException(nameof(buyersRepository));
-            _productsRepository = productsRepository ?? throw new ArgumentNullException(nameof(productsRepository));
             _salesRepository = salesRepository ?? throw new ArgumentNullException(nameof(salesRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _logger.LogCritical($"Тест логирования");
         }
 
         /// <summary>
@@ -35,15 +34,12 @@ namespace buy_sale.host.Controllers
         [Route("sale")]
         public async Task<ActionResult<Sale>> Sale(
             int salePointId,
-            int buyerId,
+            int? buyerId,
             List<PostSalesData> postSalesData
             )
         {
             var salePoint = await _salesPointRepository.SingleOrDefaultAsync(salePointId);
             if (salePoint is null) return BadRequest();
-
-            var buyer = await _salesPointRepository.SingleOrDefaultAsync(buyerId);
-            if (buyer is null) return BadRequest();
 
             var salesData = new List<SalesData>();
             var totalAmount = 0m;
