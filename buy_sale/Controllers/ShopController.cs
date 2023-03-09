@@ -11,16 +11,19 @@ namespace buy_sale.host.Controllers
     {
         IRepository<SalesPoint> _salesPointRepository;
         IRepository<Sale> _salesRepository;
+        IRepository<Buyer> _buyersRepository;
         ILogger<ShopController> _logger;
 
         public ShopController(
             IRepository<SalesPoint> salesPointRepository,
             IRepository<Sale> salesRepository,
+            IRepository<Buyer> buyersRepository,
             ILogger<ShopController> logger
             )
         {
             _salesPointRepository = salesPointRepository ?? throw new ArgumentNullException(nameof(salesPointRepository));
             _salesRepository = salesRepository ?? throw new ArgumentNullException(nameof(salesRepository));
+            _buyersRepository = buyersRepository ?? throw new ArgumentNullException(nameof(buyersRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             _logger.LogCritical($"Тест логирования");
@@ -40,6 +43,12 @@ namespace buy_sale.host.Controllers
         {
             var salePoint = await _salesPointRepository.SingleOrDefaultAsync(salePointId);
             if (salePoint is null) return BadRequest();
+
+            if (buyerId is not null)
+            {
+                var buyer = await _buyersRepository.SingleOrDefaultAsync((int)buyerId);
+                if (buyer is null) return BadRequest();
+            }
 
             var salesData = new List<SalesData>();
             var totalAmount = 0m;

@@ -46,7 +46,7 @@ namespace buy_sale.tests
                 .ProvidedProducts.SingleOrDefault(pp => pp.ProductId == 1).ProductQuantity;
 
             var json = JsonSerializer.Serialize(listSalesData);
-                
+
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri($"https://localhost:7076/api/shop/sale?salePointId={salePointId}&buyerId={buyerId}"),
